@@ -8,7 +8,7 @@ def tela_inicio(screen):
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    fundo = pygame.image.load('images/inicio.png')
+    fundo = pygame.image.load('images/Tela inicial.jpg')
     fundo=pygame.transform.scale(fundo,(tela))
 
     roda = True
@@ -40,7 +40,7 @@ def tela_inicio(screen):
 def tela_final(screen):
     timer=pygame.time.Clock()
 
-    fundo2 = pygame.image.load('images/img_fim.png')
+    fundo2 = pygame.image.load('images/Tela final.jpg')
     fundo2=pygame.transform.scale(fundo2,(tela))
     roda= True
     while roda:
