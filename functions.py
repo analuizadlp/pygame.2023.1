@@ -8,11 +8,12 @@ def tela_inicio(screen):
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    fundo = pygame.image.load('images/img_fim.png')
+    fundo = pygame.image.load('images/inicio.png')
     fundo=pygame.transform.scale(fundo,(tela))
 
     roda = True
     while roda:
+        texto='Pressione qualquer tecla para sair'
 
         # Ajusta a velocidade do jogo.
         clock.tick(fps)
@@ -21,7 +22,7 @@ def tela_inicio(screen):
         for event in pygame.event.get():
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:
-                state = quit
+                state = done
                 roda = False
 
             if event.type == pygame.KEYUP:
@@ -29,12 +30,13 @@ def tela_inicio(screen):
                 roda = False
 
         # A cada loop, redesenha o fundo e os sprites
-        screen.fill((0,0,0))
+        screen.fill((255,0,0))
         screen.blit(fundo, (0,0))
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
     return state
+
 def tela_final(screen):
     timer=pygame.time.Clock()
 
@@ -46,17 +48,19 @@ def tela_final(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = done
-                roda = False
-            if event.type == pygame.K_DOWN:
-                state = done
-                roda = False
-            if event.type == pygame.K_RIGHT:
-                state= running
-                roda= False
+                roda=False
+            if event.type==pygame.KEYDOWN:
+                if event.key == pygame.K_s:
+                    state = done
+                    roda=False
+                if event.key == pygame.K_SPACE:
+                    state= running
+                    roda=False
             screen.fill((0,0,0))
             screen.blit(fundo2, (0,0))
             pygame.display.flip()
     return state
+    
     
 
 def tela_jogo(screen):
@@ -83,7 +87,7 @@ def tela_jogo(screen):
 
     anima_conta=0
     anima_limite=2000
-    anima_vel=60
+    anima_vel=30
 
     bloco=deepcopy(choice(blocos))
     def borders():
@@ -169,9 +173,7 @@ def tela_jogo(screen):
                     altura_linhas+=1
                     break   
         if altura_linhas >= 14:
-            state=quit
             roda= False  
-        #check if the game is over
         
         
         text_surface = fonte.render("{:08d}".format(score), True, (255, 255, 0))
@@ -195,6 +197,7 @@ def tela_jogo(screen):
         rnumero=randint(0,2)
         
         pygame.display.flip()
+    state= quit
     return state
         
 

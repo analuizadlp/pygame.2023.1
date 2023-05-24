@@ -12,11 +12,12 @@ screen=pygame.display.set_mode(tela)
 timer=pygame.time.Clock()
 state= start
 while state!= done:
+    print(state)
     if state == start:
         state= tela_inicio(screen)
-    if state == running:
+    elif state == running:
         state= tela_jogo(screen)
     else:
+        print("entrou yela final")
         state= tela_final(screen)
-
-pygame.QUIT()
+pygame.quit()
