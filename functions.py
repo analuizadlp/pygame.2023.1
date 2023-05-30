@@ -82,7 +82,7 @@ def tela_jogo(screen):
     cores = [(255,0, 0) ,(0,255, 0), (0,0, 255),(255,233, 0)]
     rnumero = randint(0,3)
     grid= [pygame.Rect(x*mult,y*mult,mult,mult)  for x in range(largura) for y in range(altura)]
-    # lista de coordenadas dos blocos
+    # Lista de coordenadas dos blocos
     blocos_ini=[[(-1,0),(-2,0),(0,0),(1,0)],
             [(0,-1),(-1,-1),(-1,0),(0,0)],
             [(-1,0),(-1,1),(0,0),(0,-1)],
@@ -90,7 +90,7 @@ def tela_jogo(screen):
             [(0,0),(0,-1),(0,1),(-1,-1)],
             [(0,0),(0,-1),(0,1),(-1,-1)],
             [(0,0),(0,-1),(0,1),(-1,0)]]
-    #fazendo blocos
+    # Criação dos blocos
     blocos = []
     for bl in blocos_ini:
         rect_list = []
@@ -101,14 +101,13 @@ def tela_jogo(screen):
     bloco_rect=pygame.Rect(0,0,mult-2,mult-2)
     field=[[0 for i in range(largura)]for j in range(altura)]
 
-    #parametro  Animação dos blocos 
+    # Parâmetros para a animação dos blocos 
     anima_conta=0
     anima_limite=2000
     anima_vel=30
-
     bloco=deepcopy(choice(blocos))
 
-    # Delimitação de bordas 
+    # Delimitação das bordas 
     def borders():
         if bloco[i].x<0 or bloco[i].x> largura-1:
             return False
@@ -116,10 +115,10 @@ def tela_jogo(screen):
             return False
         return True
     
-    # Contagem de pontos 
+    # Contagem dos pontos 
     score=0
     linhascoletadas=0
-    #loop do jogo
+    # Determinação do loop do jogo
     roda= True
     while roda:
         vel_x,rotate=0,False
@@ -127,7 +126,7 @@ def tela_jogo(screen):
         for event in pygame.event.get():
             if event.type== pygame.QUIT:
                 exit()
-            #movimentacao bloco - atribui a velocidade
+            # Movimentacao do bloco - atribuição de velocidade
             if event.type==pygame.KEYDOWN:
                 if event.key== pygame.K_LEFT:
                     vel_x= -1
@@ -138,16 +137,18 @@ def tela_jogo(screen):
                 elif event.key==pygame.K_UP:
                     rotate= True
         
-        screen.fill((0, 0, 0))  # Preenche com a cor branca
+        # Preenche o bloco fixado com a cor branca
+        screen.fill((0, 0, 0)) 
         screen.blit(img_fundo_jogo, (0, 0))
-        #move x -aplica a velocidade
+
+        # Move bloco (eixo x) - Aplicação da velocidade
         old_bloc=deepcopy(bloco)
         for i in range(4):
             bloco[i].x+= vel_x
             if not borders():
                 bloco=deepcopy(old_bloc)
                 break
-        #move y - aplica a velocidade
+        # Move bloco (eixo y) - Aplicação da velocidade
         anima_conta+=anima_vel
         if anima_conta>=anima_limite:
             anima_conta=0
@@ -160,7 +161,8 @@ def tela_jogo(screen):
                     bloco=deepcopy(choice(blocos))
                     anima_limite=2000
                     break
-        #rotate- rotacao do bloco
+
+        # Rotação do bloco
         center=bloco[0]
         old_bloc=deepcopy(bloco)
         if rotate:
@@ -172,7 +174,8 @@ def tela_jogo(screen):
                 if not borders():
                     bloco=deepcopy(old_bloc)
                     break
-        #checa as linhas + marca o score
+
+        # Checa as linhas e marca os pontos (score)
         line= altura-1
         coletadas=0
         n_coletadas=0
@@ -195,19 +198,17 @@ def tela_jogo(screen):
                 if field[vertical][horizontal]!=0:
                     altura_linhas+=1
                     break   
-        #checa e o jogo acabou
+        # Determina que se os blocos chegarem ao limite de altur, o jogo acaba
         if altura_linhas >= 14:
             roda= False  
         
-        #escreve o score
+        # Escreve os pontos (score)
         text_surface = fonte.render("{:08d}".format(score), True, (255, 255, 0))
         text_rect = text_surface.get_rect()
         text_rect.midtop = (largura / 2,  10)
         screen.blit(text_surface, text_rect)
 
-
-        
-        #inseri os blocos
+        # Insere os blocos
         [pygame.draw.rect(screen,(40,40,40),i_rect,1)for i_rect in grid]
         for i in range(4):
             bloco_rect.x= bloco[i].x*mult
@@ -221,7 +222,7 @@ def tela_jogo(screen):
         rnumero=randint(0,2)
         
         pygame.display.flip()
-    state= quit
+    state = quit
     return state
         
 
