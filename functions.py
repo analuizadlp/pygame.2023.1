@@ -25,10 +25,10 @@ def tela_inicio(screen):
                 state = done
                 roda = False
 
-            if event.type == pygame.KEYUP:
-                state = running
-                roda = False
-
+            if event.type==pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    state= running
+                    roda=False
         # A cada loop, redesenha o fundo e os sprites
         screen.fill((255,0,0))
         screen.blit(fundo, (0,0))
